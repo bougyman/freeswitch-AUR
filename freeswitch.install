@@ -1,0 +1,35 @@
+## arg 1:  the new package version
+pre_install() {
+  getent group freeswitch > /dev/null
+  if [ $? -ne 0 ];then
+    echo 'Adding group freeswitch'
+    groupadd  -r freeswitch
+  fi
+  id freeswitch > /dev/null
+  if [ $? -ne 0 ];then
+    echo 'Adding user freeswitch'
+    useradd -r freeswitch -g freeswitch
+  fi
+}
+
+## arg 1:  the new package version
+post_install() {
+  chown -R freeswitch:freeswitch /var/{run,spool,log}/freeswitch
+  chown -R freeswitch:freeswitch /etc/freeswitch
+  echo "Freeswitch is installed, start with
+    /etc/rc.d/freeswitch start" 
+}
+
+## arg 1:  the new package version
+## arg 2:  the old package version
+post_upgrade() {
+  chown -R freeswitch:freeswitch /var/{run,spool,log}/freeswitch
+}
+
+post_remove() {
+  userdel freeswitch
+  getent group freeswitch &> /dev/null && groupdel freeswitch
+  true
+}
+
+# vim:set ts=2 sw=2 et:
