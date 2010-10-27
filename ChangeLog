@@ -1,5 +1,9 @@
 2010-10-26 TJ Vanderpoel <tj@rubyists.com>
 
+	* 20101026-7 :
+	Changed handling of configuration so that it
+	  will not be overwritten on upgrades
+
 	* 20101026-5 :
 	Removed libtool files from lib dirs
 	Moved primary --prefix to /var/lib/freeswitch

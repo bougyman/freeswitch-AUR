@@ -1,4 +1,3 @@
-## arg 1:  the new package version
 pre_install() {
   getent group freeswitch > /dev/null
   if [ $? -ne 0 ];then
@@ -12,18 +11,19 @@ pre_install() {
   fi
 }
 
-## arg 1:  the new package version
 post_install() {
-  chown -R freeswitch:freeswitch /var/{run,spool,log}/freeswitch
+  cp -a /usr/share/doc/freeswitch/examples/conf.archlinux/* /etc/freeswitch/
   chown -R freeswitch:freeswitch /etc/freeswitch
   echo "Freeswitch is installed, start with
-    /etc/rc.d/freeswitch start" 
+        /etc/rc.d/freeswitch start" 
+  post_upgrade
 }
 
-## arg 1:  the new package version
-## arg 2:  the old package version
 post_upgrade() {
   chown -R freeswitch:freeswitch /var/{run,spool,log}/freeswitch
+  echo "FreeSWITCH's default configuration available in
+        /usr/share/doc/freeswitch/examples/conf.default, with this package's
+        version in /usr/share/doc/freeswitch/examples/conf.archlinux"
 }
 
 post_remove() {

@@ -16,7 +16,7 @@
 # Maintainer: TJ Vanderpoel <tj@rubyists.com>
 pkgname=freeswitch-git
 pkgver=20101026
-pkgrel=5
+pkgrel=7
 pkgdesc="Open Source soft switch (telephony engine) built from git"
 arch=('i686' 'x86_64')
 url="http://freeswitch.org"
@@ -31,7 +31,6 @@ optdepends=('libjpeg: spandsp for faxing'
             'postgresql-libs: for postgresql db support')
 provides=('freeswitch')
 conflicts=('freeswitch')
-backup=('etc/freeswitch/vars.xml')
 install=freeswitch.install
 source=('freeswitch.conf.d' 'freeswitch.rc.conf' 'README.freeswitch')
 changelog='ChangeLog'
@@ -123,10 +122,12 @@ enable_mod_xml() {
   
   if [ "x$(grep $_fs_mod $pkgdir/etc/freeswitch/autoload_configs/modules.conf.xml)" == "x" ];then
     msg "Adding missing module ${_fs_mod} to modules.conf.xml"    
-    sed -i -e "s|^\(\s*</modules>\)|\t\t<load module=\"${_fs_mod}\"/>\n\1|" $pkgdir/etc/freeswitch/autoload_configs/modules.conf.xml
+    sed -i -e "s|^\(\s*</modules>\)|\t\t<\!-- added by archlinux package -->\n\t\t<load module=\"${_fs_mod}\"/>\n\1|" \
+      $pkgdir/etc/freeswitch/autoload_configs/modules.conf.xml
   else
     msg "Enabling module ${_fs_mod} in modules.conf.xml"    
-    sed -i -e "s|^\(\s*\)<\!--\s*\(<load module=\"${_fs_mod}\"/>\)\s*-->|\1\2|" $pkgdir/etc/freeswitch/autoload_configs/modules.conf.xml
+    sed -i -e "s|^\(\s*\)<\!--\s*\(<load module=\"${_fs_mod}\"/>\)\s*-->|\1\2|" \
+      $pkgdir/etc/freeswitch/autoload_configs/modules.conf.xml
   fi
 
 }
@@ -134,7 +135,8 @@ enable_mod_xml() {
 disable_mod_xml() {
   _fs_mod=$(basename $1)
   msg "Disabling module ${_fs_mod} in modules.conf.xml"    
-  sed -i -e "s|^\(\s*\)\(<load module=\"${_fs_mod}\"/>\)|\1<\!-- \2 -->|" $pkgdir/etc/freeswitch/autoload_configs/modules.conf.xml
+  sed -i -e "s|^\(\s*\)\(<load module=\"${_fs_mod}\"/>\)|\1<\!-- \2 -->|" \
+    $pkgdir/etc/freeswitch/autoload_configs/modules.conf.xml
 }
 
 package() {
@@ -142,6 +144,8 @@ package() {
   make DESTDIR="$pkgdir/" install
   make DESTDIR="$pkgdir/" moh-install
   make DESTDIR="$pkgdir/" sounds-install
+  # Mangle freeswitch's installed dirs into a more compliant structure,
+  # leaving symlinks in their place so freeswitch doesn't notice.
   [ -d $pkgdir/var/spool/freeswitch ] || mkdir -p $pkgdir/var/spool/freeswitch
   mv $pkgdir/var/lib/freeswitch/db $pkgdir/var/spool/freeswitch/ && 
     ln -s /var/spool/freeswitch/db $pkgdir/var/lib/freeswitch/db
@@ -159,7 +163,10 @@ package() {
   cp -a support-d/* $pkgdir/usr/share/doc/freeswitch/support-d/
   install -D -m 0755 -d $pkgdir/usr/share/doc/freeswitch/scripts
   cp -a scripts/* $pkgdir/usr/share/doc/freeswitch/scripts/
-
+  # Copy upstream confs 
+  install -D -m 0755 -d $pkgdir/usr/share/doc/freeswitch/examples/conf.default
+  install -D -m 0755 -d $pkgdir/usr/share/doc/freeswitch/examples/conf.archlinux
+  cp -a $pkgdir/etc/freeswitch/* $pkgdir/usr/share/doc/freeswitch/examples/conf.default/
 
   for _mod in ${_enabled_modules[@]};do
     enable_mod_xml $_mod
@@ -168,4 +175,6 @@ package() {
   for _mod in ${_disabled_modules[@]};do
     disable_mod_xml $_mod
   done
+
+  mv $pkgdir/etc/freeswitch/* $pkgdir/usr/share/doc/freeswitch/examples/conf.archlinux/
 } 
