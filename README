@@ -1,0 +1,11 @@
+This is an archlinux package which builds FreeSWITCH from latest git.
+You may clone and makepkg or use and AUR helper (yaourt, cower, etc.)
+to install in archlinux.  
+
+I seek to keep as close to the default FreeSWITCH install with a few exceptions:
+ * All langauges/ modules are disabled (spidermonkey and lua)
+ * say/mod_say_ru is disabled
+ * dialplans/mod_dialplan_asterisk is disabled
+ * applications/mod_callcenter is built and loaded
+ * xml_int/mod_xml_curl is built and loaded
+ * xml_int/mod_xml_cdr is loaded
