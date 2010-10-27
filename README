@@ -1,5 +1,5 @@
 This is an archlinux package which builds FreeSWITCH from latest git.
-You may clone and makepkg or use and AUR helper (yaourt, cower, etc.)
+You may clone and makepkg or use an AUR helper (yaourt, cower, etc.)
 to install in archlinux.  
 
 I seek to keep as close to the default FreeSWITCH install with a few exceptions:
