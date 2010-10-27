@@ -9,3 +9,5 @@ I seek to keep as close to the default FreeSWITCH install with a few exceptions:
  * applications/mod_callcenter is built and loaded
  * xml_int/mod_xml_curl is built and loaded
  * xml_int/mod_xml_cdr is loaded
+
+Questions?  You can usually find me on #freeswitch and #archlinux on Freenode IRC
