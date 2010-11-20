@@ -16,7 +16,7 @@
 # Maintainer: TJ Vanderpoel <tj@rubyists.com>
 pkgname=freeswitch-git
 pkgver=20101026
-pkgrel=7
+pkgrel=8
 pkgdesc="Open Source soft switch (telephony engine) built from git"
 arch=('i686' 'x86_64')
 url="http://freeswitch.org"
@@ -151,6 +151,8 @@ package() {
     ln -s /var/spool/freeswitch/db $pkgdir/var/lib/freeswitch/db
   mv $pkgdir/var/lib/freeswitch/recordings $pkgdir/var/spool/freeswitch/ && \
     ln -s /var/spool/freeswitch/recordings $pkgdir/var/lib/freeswitch/recordings
+  install -d /var/spool/freeswitch/storage && \
+    ln -s /var/spool/freeswitch/storage $pkgdir/var/lib/freeswitch/storage
   rm $pkgdir/var/lib/freeswitch/mod/*.la
   rm $pkgdir/usr/lib/freeswitch/*.la
   mv $pkgdir/var/lib/freeswitch/mod $pkgdir/usr/lib/freeswitch/ && \
@@ -178,3 +180,6 @@ package() {
 
   mv $pkgdir/etc/freeswitch/* $pkgdir/usr/share/doc/freeswitch/examples/conf.archlinux/
 } 
+md5sums=('418ac2e771833fd37d3ec880916feba8'
+         '160e21eff0d0e969a6104d3b308cd5fe'
+         'bfa0c6c70c8173bc78fd228bd42a98ef')
