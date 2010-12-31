@@ -15,8 +15,8 @@
 
 # Maintainer: TJ Vanderpoel <tj@rubyists.com>
 pkgname=freeswitch-git
-pkgver=20101026
-pkgrel=8
+pkgver=20101231
+pkgrel=1
 pkgdesc="Open Source soft switch (telephony engine) built from git"
 arch=('i686' 'x86_64')
 url="http://freeswitch.org"
