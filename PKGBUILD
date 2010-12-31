@@ -168,6 +168,7 @@ package() {
   # Copy upstream confs 
   install -D -m 0755 -d $pkgdir/usr/share/doc/freeswitch/examples/conf.default
   install -D -m 0755 -d $pkgdir/usr/share/doc/freeswitch/examples/conf.archlinux
+  ln -s /etc/freeswitch $pkgdir/var/lib/freeswitch/conf
   cp -a $pkgdir/etc/freeswitch/* $pkgdir/usr/share/doc/freeswitch/examples/conf.default/
 
   for _mod in ${_enabled_modules[@]};do
@@ -180,6 +181,3 @@ package() {
 
   mv $pkgdir/etc/freeswitch/* $pkgdir/usr/share/doc/freeswitch/examples/conf.archlinux/
 } 
-md5sums=('418ac2e771833fd37d3ec880916feba8'
-         '160e21eff0d0e969a6104d3b308cd5fe'
-         'bfa0c6c70c8173bc78fd228bd42a98ef')
