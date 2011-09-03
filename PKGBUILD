@@ -15,7 +15,7 @@
 
 # Maintainer: TJ Vanderpoel <tj@rubyists.com>
 pkgname=freeswitch-git
-pkgver=20101231
+pkgver=20110901
 pkgrel=1
 pkgdesc="Open Source soft switch (telephony engine) built from git"
 arch=('i686' 'x86_64')
@@ -82,7 +82,7 @@ build() {
     cd $_gitname && git pull origin
     msg "The local files are updated."
   else
-    git clone $_gitroot $_gitname
+    git clone --depth 1 $_gitroot $_gitname
   fi
 
   msg "GIT checkout done or server timeout"
