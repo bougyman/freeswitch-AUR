@@ -183,7 +183,7 @@ package() {
     ln -s /var/spool/freeswitch/db $pkgdir/var/lib/freeswitch/db
   mv $pkgdir/var/lib/freeswitch/recordings $pkgdir/var/spool/freeswitch/ && \
     ln -s /var/spool/freeswitch/recordings $pkgdir/var/lib/freeswitch/recordings
-  install -d /var/spool/freeswitch/storage && \
+  install -D -m 0755 -d /var/spool/freeswitch/storage && \
     ln -s /var/spool/freeswitch/storage $pkgdir/var/lib/freeswitch/storage
   rm $pkgdir/var/lib/freeswitch/mod/*.la
   rm $pkgdir/usr/lib/freeswitch/*.la
