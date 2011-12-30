@@ -61,17 +61,17 @@ _disabled_modules=(languages/mod_spidermonkey
 # Uncomment this to enable backgrounded concurrent bootstrap operations.
 # You will suffer a lot of autotools scroll from this, Fair Warning.
 
-_concurrent="-j"
+#_concurrent="-j"
 
 # BUILD CONFIGURATION ENDS                     #
 #                                              #
 # CHANGE ANYTHING BELOW HERE AT YOUR OWN RISK! #
 #                                              #
 
-pkgname=freeswitch-git
-pkgver=20111223
+pkgname=freeswitch
+pkgver=1.0.8_pre_alpha
 pkgrel=1
-pkgdesc="Open Source soft switch (telephony engine) built from git"
+pkgdesc="Open Source soft switch (telephony engine) built from a specific git commit tag"
 arch=('i686' 'x86_64')
 url="http://freeswitch.org"
 license=('MPL')
@@ -110,10 +110,17 @@ build() {
   msg "Connecting to GIT server...."
 
   if [ -d $_gitname ] ; then
-    cd $_gitname && git pull origin
+    cd $_gitname
+    git fetch origin HEAD
+    git checkout 67d6583679908173812a733b3bc0ba856713395f
     msg "The local files are updated."
   else
-    git clone --depth 1 $_gitroot $_gitname
+    mkdir $_gitname
+    cd $_gitname
+    git init
+    git remote add origin $_gitroot
+    git fetch origin HEAD
+    git checkout 67d6583679908173812a733b3bc0ba856713395f
   fi
 
   msg "GIT checkout done or server timeout"
