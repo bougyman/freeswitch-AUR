@@ -61,7 +61,7 @@ _disabled_modules=(languages/mod_spidermonkey
 # Uncomment this to enable backgrounded concurrent bootstrap operations.
 # You will suffer a lot of autotools scroll from this, Fair Warning.
 
-_concurrent="-j"
+#_concurrent="-j"
 
 # BUILD CONFIGURATION ENDS                     #
 #                                              #
