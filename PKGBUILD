@@ -91,8 +91,8 @@ md5sums=('51bb8b9c03b36b7c8cb7143341b49248'
          'e9f0bdde366bca6fd29a9202818f3591'
          'e6411d793501c29ec4afd6d54018de1b')
 
-_gitroot="git://git.freeswitch.org/freeswitch.git"
-_gitname="freeswitch"
+__gitroot="git://git.freeswitch.org/freeswitch.git"
+__gitname="freeswitch"
 
 
 enable_module() {
@@ -109,16 +109,16 @@ build() {
   cd "$srcdir"
   msg "Connecting to GIT server...."
 
-  if [ -d $_gitname ] ; then
-    cd $_gitname
+  if [ -d $__gitname ] ; then
+    cd $__gitname
     git fetch origin HEAD
     git checkout 67d6583679908173812a733b3bc0ba856713395f
     msg "The local files are updated."
   else
-    mkdir $_gitname
-    cd $_gitname
+    mkdir $__gitname
+    cd $__gitname
     git init
-    git remote add origin $_gitroot
+    git remote add origin $__gitroot
     git fetch origin HEAD
     git checkout 67d6583679908173812a733b3bc0ba856713395f
   fi
@@ -126,9 +126,9 @@ build() {
   msg "GIT checkout done or server timeout"
   msg "Starting make..."
 
-  rm -rf "$srcdir/$_gitname-build"
-  cp -a "$srcdir/$_gitname" "$srcdir/$_gitname-build"
-  cd "$srcdir/$_gitname-build"
+  rm -rf "$srcdir/$__gitname-build"
+  cp -a "$srcdir/$__gitname" "$srcdir/$__gitname-build"
+  cd "$srcdir/$__gitname-build"
 
   # BUILD BEGINS
   msg "Bootstrapping..."
@@ -145,7 +145,7 @@ build() {
     msg "Disabling $_mod"
     disable_module $_mod
   done
-  
+
   msg "Module Configuration Complete, Stop Now with Ctrl-C if the above is not correct"
   sleep 5
 
@@ -162,13 +162,13 @@ build() {
 
 enable_mod_xml() {
   _fs_mod=$(basename $1)
-  
+
   if [ "x$(grep $_fs_mod $pkgdir/etc/freeswitch/autoload_configs/modules.conf.xml)" == "x" ];then
-    msg "Adding missing module ${_fs_mod} to modules.conf.xml"    
+    msg "Adding missing module ${_fs_mod} to modules.conf.xml"
     sed -i -e "s|^\(\s*</modules>\)|\t\t<\!-- added by archlinux package -->\n\t\t<load module=\"${_fs_mod}\"/>\n\1|" \
       $pkgdir/etc/freeswitch/autoload_configs/modules.conf.xml
   else
-    msg "Enabling module ${_fs_mod} in modules.conf.xml"    
+    msg "Enabling module ${_fs_mod} in modules.conf.xml"
     sed -i -e "s|^\(\s*\)<\!--\s*\(<load module=\"${_fs_mod}\"/>\)\s*-->|\1\2|" \
       $pkgdir/etc/freeswitch/autoload_configs/modules.conf.xml
   fi
@@ -177,20 +177,20 @@ enable_mod_xml() {
 
 disable_mod_xml() {
   _fs_mod=$(basename $1)
-  msg "Disabling module ${_fs_mod} in modules.conf.xml"    
+  msg "Disabling module ${_fs_mod} in modules.conf.xml"
   sed -i -e "s|^\(\s*\)\(<load module=\"${_fs_mod}\"/>\)|\1<\!-- \2 -->|" \
     $pkgdir/etc/freeswitch/autoload_configs/modules.conf.xml
 }
 
 package() {
-  cd "$srcdir/$_gitname-build"
+  cd "$srcdir/$__gitname-build"
   make DESTDIR="$pkgdir/" install
   make DESTDIR="$pkgdir/" ${_sounds}moh-install
   make DESTDIR="$pkgdir/" ${_sounds}sounds-install
   # Mangle freeswitch's installed dirs into a more compliant structure,
   # leaving symlinks in their place so freeswitch doesn't notice.
   [ -d $pkgdir/var/spool/freeswitch ] || mkdir -p $pkgdir/var/spool/freeswitch
-  mv $pkgdir/var/lib/freeswitch/db $pkgdir/var/spool/freeswitch/ && 
+  mv $pkgdir/var/lib/freeswitch/db $pkgdir/var/spool/freeswitch/ &&
     ln -s /var/spool/freeswitch/db $pkgdir/var/lib/freeswitch/db
   mv $pkgdir/var/lib/freeswitch/recordings $pkgdir/var/spool/freeswitch/ && \
     ln -s /var/spool/freeswitch/recordings $pkgdir/var/lib/freeswitch/recordings
@@ -208,7 +208,7 @@ package() {
   cp -a support-d/* $pkgdir/usr/share/doc/freeswitch/support-d/
   install -D -m 0755 -d $pkgdir/usr/share/doc/freeswitch/scripts
   cp -a scripts/* $pkgdir/usr/share/doc/freeswitch/scripts/
-  # Copy upstream confs 
+  # Copy upstream confs
   install -D -m 0755 -d $pkgdir/usr/share/doc/freeswitch/examples/conf.default
   install -D -m 0755 -d $pkgdir/usr/share/doc/freeswitch/examples/conf.archlinux
   ln -s /etc/freeswitch $pkgdir/var/lib/freeswitch/conf
@@ -226,4 +226,4 @@ package() {
   install -D -m 0755 "$srcdir/run.freeswitch" $pkgdir/etc/sv/freeswitch/run
   install -D -m 0755 "$srcdir/run_log.freeswitch" $pkgdir/etc/sv/freeswitch/log/run
   install -D -m 0644 "$srcdir/conf_log.freeswitch" $pkgdir/etc/sv/freeswitch/log/conf
-} 
+}
