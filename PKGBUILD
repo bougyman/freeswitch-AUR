@@ -87,7 +87,7 @@ changelog='ChangeLog'
 md5sums=('51bb8b9c03b36b7c8cb7143341b49248'
          '160e21eff0d0e969a6104d3b308cd5fe'
          'bfa0c6c70c8173bc78fd228bd42a98ef'
-         '80c08a9bcf6470f863f585ecb6ce21b0'
+         '3862a78cf77a7bba61078f159f551c84'
          'e9f0bdde366bca6fd29a9202818f3591'
          'e6411d793501c29ec4afd6d54018de1b')
 
