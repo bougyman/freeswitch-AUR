@@ -70,7 +70,7 @@ _disabled_modules=(languages/mod_spidermonkey
 
 pkgname=freeswitch
 pkgver=1.0.8_pre_alpha
-pkgrel=1
+pkgrel=2
 pkgdesc="Open Source soft switch (telephony engine) built from a specific, stable git commit tag"
 arch=('i686' 'x86_64')
 url="http://freeswitch.org"
@@ -93,6 +93,7 @@ md5sums=('51bb8b9c03b36b7c8cb7143341b49248'
 
 __gitroot="git://git.freeswitch.org/freeswitch.git"
 __gitname="freeswitch"
+__gitrev=6973fbfa6d7f55d8fcaa3b7cc652620cc9f08122
 
 
 enable_module() {
@@ -112,7 +113,7 @@ build() {
   if [ -d $__gitname ] ; then
     cd $__gitname
     git fetch origin HEAD
-    git checkout 67d6583679908173812a733b3bc0ba856713395f
+    git checkout $__gitrev
     msg "The local files are updated."
   else
     mkdir $__gitname
@@ -120,7 +121,7 @@ build() {
     git init
     git remote add origin $__gitroot
     git fetch origin HEAD
-    git checkout 67d6583679908173812a733b3bc0ba856713395f
+    git checkout $__gitrev
   fi
 
   msg "GIT checkout done or server timeout"
