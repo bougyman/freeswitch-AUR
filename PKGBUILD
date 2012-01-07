@@ -70,7 +70,7 @@ _disabled_modules=(languages/mod_spidermonkey
 
 pkgname=freeswitch
 pkgver=1.2.0_pre_alpha
-pkgrel=4
+pkgrel=5
 pkgdesc="Open Source soft switch (telephony engine) built from a specific, stable git commit tag"
 arch=('i686' 'x86_64')
 url="http://freeswitch.org"
