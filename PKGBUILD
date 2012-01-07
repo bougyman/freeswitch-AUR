@@ -70,7 +70,7 @@ _disabled_modules=(languages/mod_spidermonkey
 
 pkgname=freeswitch
 pkgver=1.0.8_pre_alpha
-pkgrel=2
+pkgrel=3
 pkgdesc="Open Source soft switch (telephony engine) built from a specific, stable git commit tag"
 arch=('i686' 'x86_64')
 url="http://freeswitch.org"
@@ -93,7 +93,7 @@ md5sums=('f674b302edeb1895bbefcaf7bb8510ca'
 
 __gitroot="git://git.freeswitch.org/freeswitch.git"
 __gitname="freeswitch"
-__gitrev=6973fbfa6d7f55d8fcaa3b7cc652620cc9f08122
+__gitrev=32ec43194514c8732bea13a40c7fa436d1127590
 
 
 enable_module() {
@@ -208,11 +208,11 @@ package() {
   install -D "$srcdir/freeswitch.rc.conf" etc/rc.d/freeswitch
   install -D -m 0644 "$srcdir/freeswitch.conf.d" etc/conf.d/freeswitch
   install -D -m 0644 "$srcdir/README.freeswitch" usr/share/doc/freeswitch/README
-  cp -a "$srcdir/${_gitname}-build/docs" usr/share/doc/freeswitch
+  cp -a "$srcdir/${__gitname}-build/docs" usr/share/doc/freeswitch
   install -D -m 0755 -d usr/share/doc/freeswitch/support-d
-  cp -a "$srcdir/${_gitname}-build/support-d" usr/share/doc/freeswitch/
+  cp -a "$srcdir/${__gitname}-build/support-d" usr/share/doc/freeswitch/
   install -D -m 0755 -d usr/share/doc/freeswitch/scripts
-  cp -a "$srcdir/${_gitname}-build/scripts" usr/share/doc/freeswitch/
+  cp -a "$srcdir/${__gitname}-build/scripts" usr/share/doc/freeswitch/
   # Copy upstream confs 
   install -D -m 0755 -d usr/share/doc/freeswitch/examples/conf.default
   install -D -m 0755 -d usr/share/doc/freeswitch/examples/conf.archlinux
