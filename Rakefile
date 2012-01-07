@@ -1,6 +1,6 @@
 require "find"
 task :md5 do
-  md5sums = `makepkg -g`
+  md5sums = `makepkg -g`.chomp
   File.open('PKGBUILD', 'r+'){|io|
     updated = io.read.sub(/^\s*md5sums=\([^)]*\)$/, md5sums)
     io.truncate 0
