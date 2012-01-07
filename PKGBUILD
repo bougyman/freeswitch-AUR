@@ -69,7 +69,7 @@ _disabled_modules=(languages/mod_spidermonkey
 #                                              #
 
 pkgname=freeswitch-git
-pkgver=20120106
+pkgver=20120107
 pkgrel=1
 pkgdesc="Open Source soft switch (telephony engine) built from git"
 arch=('i686' 'x86_64')
@@ -84,10 +84,10 @@ conflicts=('freeswitch')
 install=freeswitch.install
 source=('freeswitch.conf.d' 'freeswitch.rc.conf' 'README.freeswitch' 'run.freeswitch' 'run_log.freeswitch' 'conf_log.freeswitch')
 changelog='ChangeLog'
-md5sums=('51bb8b9c03b36b7c8cb7143341b49248'
-         '160e21eff0d0e969a6104d3b308cd5fe'
+md5sums=('f674b302edeb1895bbefcaf7bb8510ca'
+         'c83b9f557a3ad362a51b48785aa00f44'
          'bfa0c6c70c8173bc78fd228bd42a98ef'
-         '3862a78cf77a7bba61078f159f551c84'
+         '1fc676c6eba5c38af6f77fd3e12a409b'
          'e9f0bdde366bca6fd29a9202818f3591'
          'e6411d793501c29ec4afd6d54018de1b')
 
@@ -180,8 +180,8 @@ package() {
   make DESTDIR="$pkgdir/" install
   make DESTDIR="$pkgdir/" ${_sounds}moh-install
   make DESTDIR="$pkgdir/" ${_sounds}sounds-install
-  cd "$pkgdir" # MUY IMPORTANT, $PWD is $pkgdir from here on out
 
+  cd "$pkgdir" # MUY IMPORTANT, $PWD is $pkgdir from here on out
   # Mangle freeswitch's installed dirs into a more compliant structure,
   # leaving symlinks in their place so freeswitch doesn't notice.
   [ -d var/spool/freeswitch ] || install -D -m 0755 -d var/spool/freeswitch
@@ -198,9 +198,9 @@ package() {
   mv var/lib/freeswitch/mod usr/lib/freeswitch/ && \
     ln -s /usr/lib/freeswitch/mod var/lib/freeswitch/mod
   install -D "$srcdir/freeswitch.rc.conf" etc/rc.d/freeswitch
-  install -D -m 0644 "$srcdir/freeswitch.conf.d" etc/conf.d/freeswitch.conf
+  install -D -m 0644 "$srcdir/freeswitch.conf.d" etc/conf.d/freeswitch
   install -D -m 0644 "$srcdir/README.freeswitch" usr/share/doc/freeswitch/README
-  cp -a $srcdir/${_gitname}-build/docs/* usr/share/doc/freeswitch/
+  cp -a "$srcdir/${_gitname}-build/docs" usr/share/doc/freeswitch
   install -D -m 0755 -d usr/share/doc/freeswitch/support-d
   cp -a "$srcdir/${_gitname}-build/support-d" usr/share/doc/freeswitch/
   install -D -m 0755 -d usr/share/doc/freeswitch/scripts
@@ -220,7 +220,8 @@ package() {
   done
 
   cp -a etc/freeswitch/* usr/share/doc/freeswitch/examples/conf.archlinux/
-  rm etc/freeswitch/directory/default/10??.xml
+  rm etc/freeswitch/directory/default/101?.xml
+  rm etc/freeswitch/directory/default/100[1-9].xml
   rm etc/freeswitch/directory/default/example.com.xml
   rm etc/freeswitch/directory/default/skinny-example.xml
   rm etc/freeswitch/directory/default/brian.xml
@@ -248,9 +249,10 @@ etc/freeswitch/autoload_configs/voicemail.conf.xml etc/freeswitch/autoload_confi
 etc/freeswitch/autoload_configs/xml_rpc.conf.xml etc/freeswitch/autoload_configs/zeroconf.conf.xml etc/freeswitch/chatplan/default.xml etc/freeswitch/dialplan/default/00_ladspa.xml
 etc/freeswitch/dialplan/default/01_Talking_Clock.xml etc/freeswitch/dialplan/default.xml etc/freeswitch/dialplan/features.xml etc/freeswitch/dialplan/public/00_inbound_did.xml
 etc/freeswitch/dialplan/public.xml etc/freeswitch/dialplan/skinny-patterns/20-Local_extension.xml etc/freeswitch/dialplan/skinny-patterns/90-External.xml etc/freeswitch/dialplan/skinny-patterns/99-Default_Drop.xml
-etc/freeswitch/dialplan/skinny-patterns.xml etc/freeswitch/directory/default/default.xml etc/freeswitch/directory/default.xml etc/freeswitch/extensions.conf
-etc/freeswitch/freeswitch.xml etc/freeswitch/fur_elise.ttml etc/freeswitch/jingle_profiles/client.xml etc/freeswitch/jingle_profiles/server.xml
-etc/freeswitch/mime.types etc/freeswitch/mrcp_profiles/loquendo-7-mrcp-v2.xml etc/freeswitch/mrcp_profiles/nuance-1.0.0-mrcp-v1.xml etc/freeswitch/mrcp_profiles/nuance-5.0-mrcp-v1.xml
-etc/freeswitch/mrcp_profiles/nuance-5.0-mrcp-v2.xml etc/freeswitch/mrcp_profiles/unimrcpserver-mrcp-v1.xml etc/freeswitch/mrcp_profiles/voxeo-prophecy-8.0-mrcp-v1.xml etc/freeswitch/notify-voicemail.tpl
-etc/freeswitch/sip_profiles/external.xml etc/freeswitch/sip_profiles/internal-ipv6.xml etc/freeswitch/sip_profiles/internal.xml etc/freeswitch/skinny_profiles/internal.xml
-etc/freeswitch/tetris.ttml etc/freeswitch/vars.xml etc/freeswitch/voicemail.tpl etc/freeswitch/web-vm.tpl)
+etc/freeswitch/dialplan/skinny-patterns.xml etc/freeswitch/directory/default/1000.xml etc/freeswitch/directory/default/default.xml etc/freeswitch/directory/default.xml
+etc/freeswitch/extensions.conf etc/freeswitch/freeswitch.xml etc/freeswitch/fur_elise.ttml etc/freeswitch/jingle_profiles/client.xml
+etc/freeswitch/jingle_profiles/server.xml etc/freeswitch/mime.types etc/freeswitch/mrcp_profiles/loquendo-7-mrcp-v2.xml etc/freeswitch/mrcp_profiles/nuance-1.0.0-mrcp-v1.xml
+etc/freeswitch/mrcp_profiles/nuance-5.0-mrcp-v1.xml etc/freeswitch/mrcp_profiles/nuance-5.0-mrcp-v2.xml etc/freeswitch/mrcp_profiles/unimrcpserver-mrcp-v1.xml etc/freeswitch/mrcp_profiles/voxeo-prophecy-8.0-mrcp-v1.xml
+etc/freeswitch/notify-voicemail.tpl etc/freeswitch/sip_profiles/external.xml etc/freeswitch/sip_profiles/internal-ipv6.xml etc/freeswitch/sip_profiles/internal.xml
+etc/freeswitch/skinny_profiles/internal.xml etc/freeswitch/tetris.ttml etc/freeswitch/vars.xml etc/freeswitch/voicemail.tpl
+etc/freeswitch/web-vm.tpl)

@@ -13,7 +13,7 @@ task :build_package => [:md5] do
   `makepkg -sf >&2` unless File.file?("pkg/etc/freeswitch/vars.xml")
 end
 
-task :repackage => [:build_package] do
+task :repackage => [:make_pkgbuild] do
   `makepkg -Rf >&2`
 end
 
@@ -31,5 +31,10 @@ task :make_pkgbuild => [:build_package] do
   File.open("PKGBUILD","w") { |f| f.puts lines.join }
 end
 
-task :default => [:make_pkgbuild, :repackage] do
+task :release do
+  `makepkg --source`
+end
+
+task :default => [:repackage, :release] do
+  puts "Release is ready"
 end
