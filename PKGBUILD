@@ -68,9 +68,9 @@ _disabled_modules=(languages/mod_spidermonkey
 # CHANGE ANYTHING BELOW HERE AT YOUR OWN RISK! #
 #                                              #
 
-pkgname=freeswitch
-pkgver=1.2.0_pre_alpha
-pkgrel=4
+pkgname=freeswitch-git
+pkgver=20120107
+pkgrel=2
 pkgdesc="Open Source soft switch (telephony engine) built from a specific, stable git commit tag"
 arch=('i686' 'x86_64')
 url="http://freeswitch.org"
@@ -85,13 +85,8 @@ install=freeswitch.install
 source=('freeswitch.conf.d' 'freeswitch.rc.conf' 'README.freeswitch' 'run.freeswitch' 'run_log.freeswitch' 'conf_log.freeswitch')
 changelog='ChangeLog'
 
-
-
-
-__gitroot="git://git.freeswitch.org/freeswitch.git"
-__gitname="freeswitch"
-__gitrev=32ec43194514c8732bea13a40c7fa436d1127590
-
+_gitroot="git://git.freeswitch.org/freeswitch.git"
+_gitname="freeswitch"
 
 enable_module() {
   _fs_mod=$1
@@ -107,26 +102,21 @@ build() {
   cd "$srcdir"
   msg "Connecting to GIT server...."
 
-  if [ -d $__gitname ] ; then
-    cd $__gitname
-    git fetch origin HEAD
-    git checkout $__gitrev
+  if [ -d $_gitname ] ; then
+    cd $_gitname
+    git pull origin master
     msg "The local files are updated."
   else
-    mkdir $__gitname
-    cd $__gitname
-    git init
-    git remote add origin $__gitroot
-    git fetch origin HEAD
-    git checkout $__gitrev
+    git clone --depth 1 $_gitroot
+    msg "FreeSWITCH repository cloned"
   fi
 
   msg "GIT checkout done or server timeout"
   msg "Starting make..."
 
-  rm -rf "$srcdir/$__gitname-build"
-  cp -a "$srcdir/$__gitname" "$srcdir/$__gitname-build"
-  cd "$srcdir/$__gitname-build"
+  rm -rf "$srcdir/$_gitname-build"
+  cp -a "$srcdir/$_gitname/" "$srcdir/${_gitname}-build"
+  cd "$srcdir/$_gitname-build"
 
   # BUILD BEGINS
   msg "Bootstrapping..."
@@ -181,7 +171,7 @@ disable_mod_xml() {
 }
 
 package() {
-  cd "$srcdir/$__gitname-build"
+  cd "$srcdir/$_gitname-build"
   make DESTDIR="$pkgdir/" install
   make DESTDIR="$pkgdir/" ${_sounds}moh-install
   make DESTDIR="$pkgdir/" ${_sounds}sounds-install
@@ -205,11 +195,11 @@ package() {
   install -D "$srcdir/freeswitch.rc.conf" etc/rc.d/freeswitch
   install -D -m 0644 "$srcdir/freeswitch.conf.d" etc/conf.d/freeswitch
   install -D -m 0644 "$srcdir/README.freeswitch" usr/share/doc/freeswitch/README
-  cp -a "$srcdir/${__gitname}-build/docs" usr/share/doc/freeswitch
+  cp -a "$srcdir/${_gitname}-build/docs" usr/share/doc/freeswitch
   install -D -m 0755 -d usr/share/doc/freeswitch/support-d
-  cp -a "$srcdir/${__gitname}-build/support-d" usr/share/doc/freeswitch/
+  cp -a "$srcdir/${_gitname}-build/support-d" usr/share/doc/freeswitch/
   install -D -m 0755 -d usr/share/doc/freeswitch/scripts
-  cp -a "$srcdir/${__gitname}-build/scripts" usr/share/doc/freeswitch/
+  cp -a "$srcdir/${_gitname}-build/scripts" usr/share/doc/freeswitch/
   # Copy upstream confs 
   install -D -m 0755 -d usr/share/doc/freeswitch/examples/conf.default
   install -D -m 0755 -d usr/share/doc/freeswitch/examples/conf.archlinux
