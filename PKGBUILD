@@ -239,7 +239,7 @@ package() {
 md5sums=('f674b302edeb1895bbefcaf7bb8510ca'
          'c83b9f557a3ad362a51b48785aa00f44'
          'bfa0c6c70c8173bc78fd228bd42a98ef'
-         '0797a434f3e6e8eff6d0c0fb5fcdb292'
+         '1fc676c6eba5c38af6f77fd3e12a409b'
          'e9f0bdde366bca6fd29a9202818f3591'
          'e6411d793501c29ec4afd6d54018de1b')
 backup=("etc/freeswitch/autoload_configs/abstraction.conf.xml" "etc/freeswitch/autoload_configs/acl.conf.xml" "etc/freeswitch/autoload_configs/alsa.conf.xml" "etc/freeswitch/autoload_configs/blacklist.conf.xml"
