@@ -214,6 +214,8 @@ package() {
   install -D -m 0755 -d usr/share/doc/freeswitch/examples/conf.default
   install -D -m 0755 -d usr/share/doc/freeswitch/examples/conf.archlinux
   ln -s /etc/freeswitch var/lib/freeswitch/conf
+  install -D -m 0755 -d usr/lib/pkg-config/ && \
+  ln -s /usr/lib/freeswitch/pkgconfig/freeswitch.pc usr/lib/pkg-config/freeswitch.pc
   cp -a etc/freeswitch/* usr/share/doc/freeswitch/examples/conf.default/
 
   for _mod in ${_enabled_modules[@]};do
