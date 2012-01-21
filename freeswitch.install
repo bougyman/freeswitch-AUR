@@ -22,7 +22,7 @@ post_install() {
 }
 
 post_upgrade() {
-  if [ -d /etc/freeswitch ];then
+  if [ -d /etc/freeswitch -a ! -L /etc/freeswitch ];then
     echo "Moving your old configs (/etc/freeswitch) to /usr/share/freeswitch/conf/local"
     mv /etc/freeswitch /usr/share/freeswitch/conf/local
     ln -s /usr/share/freeswitch/conf/local /etc/freeswitch
