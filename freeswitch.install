@@ -27,7 +27,7 @@ post_upgrade() {
     mv /etc/freeswitch /usr/share/freeswitch/conf/local
     ln -s /usr/share/freeswitch/conf/local /etc/freeswitch
   fi
-  [ -d /usr/share/freeswitch/conf/pbx ] || cp -a /usr/share/doc/freeswitch/conf.archlinux/ /usr/share/freeswitch/conf/pbx
+  [ -d /usr/share/freeswitch/conf/pbx ] || cp -a /usr/share/doc/freeswitch/examples/conf.archlinux/ /usr/share/freeswitch/conf/pbx
   chown -R freeswitch:freeswitch /usr/share/freeswitch/conf/pbx
   if [ ! -L /etc/freeswitch ];then
     echo "Linking /usr/share/freeswitch/conf/pbx to /etc/freeswitch"
