@@ -227,7 +227,7 @@ package() {
 
   mv etc/freeswitch/* usr/share/doc/freeswitch/examples/conf.archlinux/
   rmdir etc/freeswitch
-  install =D -m0755 -d usr/share/freeswitch/conf
+  install -D -m0755 -d usr/share/freeswitch/conf
   install -D -m 0755 "$srcdir/run.freeswitch" etc/sv/freeswitch/run
   install -D -m 0755 "$srcdir/run_log.freeswitch" etc/sv/freeswitch/log/run
   install -D -m 0644 "$srcdir/conf_log.freeswitch" etc/sv/freeswitch/log/conf
