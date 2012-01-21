@@ -10,23 +10,11 @@ task :md5 do
 end
 
 task :build_package => [:md5] do
-  `makepkg -sf >&2` unless File.file?("pkg/etc/freeswitch/vars.xml")
+  `makepkg -sf >&2` unless File.file?("pkg/etc/sv/freeswitch/run")
 end
 
-task :repackage => [:make_pkgbuild] do
+task :repackage => [:build_package] do
   `makepkg -Rf >&2`
-end
-
-task :make_pkgbuild => [:build_package] do
-  files = Find.find("pkg/etc/freeswitch").entries.select do |f| 
-    f.match(%r{default\.xml$|1000\.xml}) ||
-    !f.match(%r{/lang/|/directory/default|/[dD]emo|[dD]emo\.|example}) && File.file?(f) 
-  end.map { |n| n.sub(%r{pkg/},'') }
-  old_pkgbuild = File.readlines("PKGBUILD")
-  backup_index = old_pkgbuild.index { |line| line.match /^\s*backup=/ } || 0
-  lines = old_pkgbuild[0 .. backup_index-1]
-  lines << "backup=(#{files.each_slice(4).map { |line| line.map { |n| %Q{"#{n}"}}.join(" ") }.join("\n")})"
-  File.open("PKGBUILD","w") { |f| f.puts lines.join }
 end
 
 task :release do
