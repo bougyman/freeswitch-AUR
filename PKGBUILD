@@ -70,7 +70,7 @@ _disabled_modules=(languages/mod_spidermonkey
 
 pkgname=freeswitch
 pkgver=1.2.0_pre_alpha
-pkgrel=6
+pkgrel=7
 pkgdesc="Open Source soft switch (telephony engine) built from a specific, stable git commit tag"
 arch=('i686' 'x86_64')
 url="http://freeswitch.org"
@@ -227,6 +227,7 @@ package() {
 
   mv etc/freeswitch/* usr/share/doc/freeswitch/examples/conf.archlinux/
   rmdir etc/freeswitch
+  install =D -m0755 -d usr/share/freeswitch/conf
   install -D -m 0755 "$srcdir/run.freeswitch" etc/sv/freeswitch/run
   install -D -m 0755 "$srcdir/run_log.freeswitch" etc/sv/freeswitch/log/run
   install -D -m 0644 "$srcdir/conf_log.freeswitch" etc/sv/freeswitch/log/conf
