@@ -69,8 +69,8 @@ _disabled_modules=(languages/mod_spidermonkey
 #                                              #
 
 pkgname=freeswitch
-pkgver=1.0.2-pre_alpha
-pkgrel=8
+pkgver=1.0.2_pre_alpha
+pkgrel=10
 pkgdesc="Open Source soft switch (telephony engine) built from a specific, stable git commit tag"
 arch=('i686' 'x86_64')
 url="http://freeswitch.org"
@@ -87,6 +87,7 @@ changelog='ChangeLog'
 
 __gitroot="git://git.freeswitch.org/freeswitch.git"
 __gitname="freeswitch"
+__gitrev="9f8d37decfabc9f59a107e79e0d3c2436968a501"
 
 enable_module() {
   _fs_mod=$1
@@ -228,7 +229,7 @@ package() {
   install -D -m 0644 "$srcdir/conf_log.freeswitch" etc/sv/freeswitch/log/conf
 } 
 md5sums=('f674b302edeb1895bbefcaf7bb8510ca'
-         '9952aa0f114ee890ebd1170b7264e907'
+         'bd3403128e7f450ebb1de835f0ad5e23'
          'bfa0c6c70c8173bc78fd228bd42a98ef'
          '4126dcbe4e1e4f689230a0fe40edcb68'
          'e9f0bdde366bca6fd29a9202818f3591'
