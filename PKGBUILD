@@ -69,7 +69,7 @@ _disabled_modules=(languages/mod_spidermonkey
 #                                              #
 
 pkgname=freeswitch
-pkgver=1.2-stable
+pkgver=v1.2.stable
 pkgrel=10
 pkgdesc="Open Source soft switch (telephony engine) built from a specific, stable git commit tag"
 arch=('i686' 'x86_64')
@@ -87,7 +87,7 @@ changelog='ChangeLog'
 
 __gitroot="git://git.freeswitch.org/freeswitch.git"
 __gitname="freeswitch"
-__gitrev="v1.2.stable"
+__gitrev="$_pkgver"
 
 enable_module() {
   _fs_mod=$1
@@ -105,15 +105,12 @@ build() {
 
   if [ -d $__gitname ] ; then
     cd $__gitname
-    git fetch origin HEAD
+    git pull
     git checkout $__gitrev
     msg "The local files are updated."
   else
-    mkdir $__gitname
+    git clone $__gitroot
     cd $__gitname
-    git init
-    git remote add origin $__gitroot
-    git fetch origin HEAD
     git checkout $__gitrev
   fi
 
