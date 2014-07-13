@@ -1,0 +1,23 @@
+# BUILD CONFIGURATION ENDS                     #
+#                                              #
+# CHANGE ANYTHING BELOW HERE AT YOUR OWN RISK! #
+#                                              #
+
+pkgname=freeswitch
+pkgver=v1.4
+pkgrel=1
+pkgdesc="Open Source soft switch (telephony engine) built from 1.4 release branch"
+arch=('i686' 'x86_64')
+url="http://freeswitch.org"
+license=('MPL')
+depends=("util-linux-ng")
+makedepends=('git' 'libjpeg' 'curl')
+optdepends=('unixodbc: for odbc support in the core'
+            'python: for some contrib scripts')
+provides=('freeswitch')
+conflicts=('freeswitch')
+install=freeswitch.install
+source=("$pkgname"::'git://git.freeswitch.org/freeswitch.git' 'freeswitch.conf.d' 'freeswitch.rc.conf' 'README.freeswitch' 'run.freeswitch' 'run_log.freeswitch' 'conf_log.freeswitch')
+changelog='ChangeLog'
+
+
