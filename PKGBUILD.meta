@@ -3,10 +3,10 @@
 # CHANGE ANYTHING BELOW HERE AT YOUR OWN RISK! #
 #                                              #
 
-pkgname=freeswitch
-pkgver=v1.4
+pkgname=freeswitch-git
+pkgver=master
 pkgrel=1
-pkgdesc="Open Source soft switch (telephony engine) built from 1.4 release branch"
+pkgdesc="Open Source soft switch (telephony engine) built from git head"
 arch=('i686' 'x86_64')
 url="http://freeswitch.org"
 license=('MPL')
