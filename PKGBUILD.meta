@@ -5,12 +5,12 @@
 
 pkgname=freeswitch
 pkgver=v1.4
-pkgrel=1
+pkgrel=2
 pkgdesc="Open Source soft switch (telephony engine) built from 1.4 release branch"
 arch=('i686' 'x86_64')
 url="http://freeswitch.org"
 license=('MPL')
-depends=("util-linux-ng")
+depends=("util-linux-ng" "speex")
 makedepends=('git' 'libjpeg' 'curl')
 optdepends=('unixodbc: for odbc support in the core'
             'python: for some contrib scripts')
